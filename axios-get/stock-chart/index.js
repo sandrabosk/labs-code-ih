@@ -6,30 +6,21 @@ const apiUrl = `https://www.alphavantage.co/query?function=${functionName}&symbo
 
 axios
   .get(apiUrl)
-  .then(responseFromAPI => {
-    console.log("The response from API: ", responseFromAPI);
-  })
-  .catch(err => {
-    console.log("Error while getting the data: ", err);
-  });
+  .then(responseFromAPI => console.log("The response from API: ", responseFromAPI))
+  .catch(err => console.log("Error while getting the data: ", err));
 
-
-  axios
+axios
   .get(apiUrl)
   .then(responseFromAPI => {
     printTheChart(responseFromAPI.data); // <== call the function here where you used to console.log() the response
   })
-  .catch(err => {
-    console.log("Error while getting the data: ", err);
-  });
+  .catch(err => console.log("Error while getting the data: ", err));
 
 function printTheChart(stockData) {
   const dailyData = stockData["Time Series (Daily)"];
 
   const stockDates = Object.keys(dailyData);
-  const stockPrices = stockDates.map(date => {
-    return dailyData[date]["4. close"];
-  });
+  const stockPrices = stockDates.map( date => dailyData[date]["4. close"] );
 
   const ctx = document.getElementById("myChart").getContext("2d");
   const chart = new Chart(ctx, {
